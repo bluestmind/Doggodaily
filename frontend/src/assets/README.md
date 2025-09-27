@@ -1,0 +1,1 @@
+Place your images and static assets here. Example: dog1.jpg, venice.jpg, book-cover.jpg, etc. 

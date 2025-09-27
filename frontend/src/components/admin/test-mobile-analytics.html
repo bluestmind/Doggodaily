@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Analytics Dashboard Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        /* Test styles to simulate responsive behavior */
+        .test-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Copy mobile styles from the component */
+        @media (max-width: 768px) {
+            .analytics-dashboard {
+                padding: 1rem !important;
+            }
+            
+            .analytics-header {
+                flex-direction: column !important;
+                gap: 1rem !important;
+                text-align: center !important;
+            }
+            
+            .analytics-header-controls {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 0.5rem !important;
+            }
+            
+            .analytics-tab-nav {
+                flex-wrap: wrap !important;
+                gap: 0.25rem !important;
+            }
+            
+            .analytics-tab-button {
+                flex: 1 !important;
+                min-width: calc(50% - 0.125rem) !important;
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .metric-card {
+                padding: 1rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .analytics-dashboard {
+                padding: 0.75rem !important;
+            }
+            
+            .analytics-title {
+                font-size: 1.2rem !important;
+            }
+            
+            .analytics-tab-button {
+                padding: 0.5rem !important;
+                font-size: 0.75rem !important;
+            }
+        }
+        
+        /* Demo styles */
+        .demo-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .demo-button {
+            background: #38b2ac;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Mobile Analytics Dashboard Test</h1>
+        <p>Resize your browser window to test mobile responsiveness.</p>
+        
+        <div class="analytics-dashboard demo-card">
+            <div class="analytics-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;">
+                <div>
+                    <h2 class="analytics-title" style="font-size: 1.8rem; font-weight: 700; color: #2d3748; margin: 0 0 0.5rem 0;">
+                        📊 Enhanced Analytics Dashboard
+                    </h2>
+                    <p style="color: #718096; margin: 0;">
+                        Comprehensive insights and real-time analytics
+                    </p>
+                </div>
+                <div class="analytics-header-controls" style="display: flex; gap: 1rem; align-items: center;">
+                    <select style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white;">
+                        <option>Last 30 days</option>
+                        <option>Last 7 days</option>
+                        <option>Last 90 days</option>
+                    </select>
+                    <button class="demo-button">Refresh</button>
+                    <button class="demo-button">Export</button>
+                </div>
+            </div>
+            
+            <div class="analytics-tab-nav" style="display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; overflow-x: auto;">
+                <button class="analytics-tab-button demo-button">Overview</button>
+                <button class="analytics-tab-button demo-button">Page Views</button>
+                <button class="analytics-tab-button demo-button">User Behavior</button>
+                <button class="analytics-tab-button demo-button">Content Performance</button>
+            </div>
+            
+            <div class="metrics-grid demo-grid">
+                <div class="metric-card demo-card">
+                    <h3 style="font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">1,234</h3>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0;">Total Users</p>
+                </div>
+                <div class="metric-card demo-card">
+                    <h3 style="font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">5,678</h3>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0;">Total Sessions</p>
+                </div>
+                <div class="metric-card demo-card">
+                    <h3 style="font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">32%</h3>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0;">Bounce Rate</p>
+                </div>
+                <div class="metric-card demo-card">
+                    <h3 style="font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">4.5%</h3>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0;">Conversion Rate</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #e2f8f5; padding: 1rem; border-radius: 8px; margin-top: 2rem;">
+            <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">✅ Mobile Responsive Features Added:</h3>
+            <ul style="margin: 0; padding-left: 1.5rem; color: #4a5568;">
+                <li>Header stacks vertically on mobile (< 768px)</li>
+                <li>Controls stack and take full width</li>
+                <li>Tab navigation wraps to 2x2 grid on mobile</li>
+                <li>Metric cards stack to single column</li>
+                <li>Grid layouts adapt to mobile screens</li>
+                <li>Font sizes and padding optimized for touch</li>
+                <li>Charts and performance grids stack on mobile</li>
+                <li>Content lists use mobile-friendly layouts</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

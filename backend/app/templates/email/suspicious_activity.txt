@@ -1,0 +1,25 @@
+🐕 DoggyDaily - Security Alert
+
+⚠️ SUSPICIOUS ACTIVITY DETECTED ⚠️
+
+Dear {{ user.email }},
+
+We detected suspicious activity on your account that requires your attention.
+
+ACTIVITY DETAILS:
+- Activity: {{ activity_description }}
+- Time: {{ timestamp }}
+- IP Address: {{ ip_address }}
+- Account: {{ user.email }}
+
+SECURITY RECOMMENDATIONS:
+• If this was you, no action is needed
+• If this wasn't you, please change your password immediately
+• Consider enabling two-factor authentication
+• Review your recent account activity
+• Contact support if you have concerns
+
+This is an automated security notification from DoggyDaily.
+If you have questions, please contact our support team.
+
+© 2025 DoggyDaily. All rights reserved.

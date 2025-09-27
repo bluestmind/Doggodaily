@@ -1,0 +1,26 @@
+# Systemd service file for NavidDoggy Flask app
+# Place this in /etc/systemd/system/naviddog.service
+
+[Unit]
+Description=NavidDoggy Flask Application
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/naviddog/backend
+Environment=PATH=/var/www/naviddog/backend/venv/bin
+Environment=FLASK_ENV=production
+Environment=FLASK_CONFIG=production
+ExecStart=/var/www/naviddog/backend/venv/bin/gunicorn --bind 127.0.0.1:5000 --workers 3 --timeout 300 --max-requests 1000 --max-requests-jitter 100 --preload --access-logfile /var/log/naviddog/access.log --error-logfile /var/log/naviddog/error.log wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+EnvironmentFile=/var/www/naviddog/backend/.env
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

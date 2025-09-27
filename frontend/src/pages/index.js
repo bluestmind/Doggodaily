@@ -1,0 +1,12 @@
+export { default as HomePage } from './HomePage';
+export { default as GalleryPage } from './GalleryPage';
+export { default as StoriesPage } from './StoriesPage';
+export { default as TourPage } from './TourPage';
+export { default as BookPage } from './BookPage';
+export { default as ContactPage } from './ContactPage';
+export { default as AdminPage } from './AdminPage';
+export { default as NotFoundPage } from './NotFoundPage'; 
+export { default as LoginPage } from './LoginPage';
+export { default as SignupPage } from './SignupPage'; 
+export { default as AdminLoginPage } from './AdminLoginPage';
+export { default as Profile } from './Profile'; 

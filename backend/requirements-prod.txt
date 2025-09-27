@@ -1,0 +1,26 @@
+# Production-specific dependencies
+gunicorn==21.2.0              # WSGI server for production
+redis==5.0.1                  # Redis client for session storage
+psycopg2-binary==2.9.7        # PostgreSQL adapter
+gevent==23.9.1                # Async support for better performance
+
+# Monitoring and logging
+sentry-sdk[flask]==1.38.0     # Error tracking
+prometheus-client==0.19.0     # Metrics collection
+
+# Performance and optimization
+flask-compress==1.14          # Response compression
+flask-caching==2.1.0          # Application caching
+
+# Security enhancements
+flask-talisman==1.1.0         # Security headers (already in main requirements)
+flask-limiter==3.5.0          # Rate limiting (already in main requirements)
+
+# Database optimization
+sqlalchemy-utils==0.41.1      # Additional SQLAlchemy utilities
+
+# Health checks and monitoring
+flask-healthz==0.0.3          # Health check endpoints
+
+# SSL/TLS support
+pyopenssl==23.3.0             # SSL certificate handling

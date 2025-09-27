@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to DoggoDaily!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00bfae 0%, #00a693 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            font-weight: bold;
+        }
+        .title {
+            color: #1a202c;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #718096;
+            font-size: 18px;
+        }
+        .content {
+            margin: 30px 0;
+        }
+        .welcome-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #00bfae 0%, #00a693 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            margin: 20px 10px;
+        }
+        .cta-button:hover {
+            background: linear-gradient(135deg, #00a693 0%, #008f7a 100%);
+        }
+        .security-tips {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 14px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #00bfae;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🐕</div>
+            <h1 class="title">Welcome to DoggoDaily!</h1>
+            <p class="subtitle">Your journey with us begins now</p>
+        </div>
+
+        <div class="content">
+            <div class="welcome-box">
+                <h2 style="margin-top: 0; color: #00a693;">🎉 Welcome, {{ user.name }}!</h2>
+                <p style="font-size: 18px; margin-bottom: 0;">Thank you for joining our community of dog lovers! We're excited to have you aboard.</p>
+            </div>
+
+            <p>Hi {{ user.name }},</p>
+            
+            <p>Welcome to DoggoDaily! Your account has been successfully created and verified. You're now part of our amazing community where dog lovers share stories, experiences, and create lasting memories.</p>
+
+            <h3>🚀 What's Next?</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h4>Share Your Stories</h4>
+                    <p>Tell us about your furry friend's adventures and connect with other dog lovers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h4>Upload Photos</h4>
+                    <p>Show off your dog's cutest moments in our community gallery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h4>Discover Tours</h4>
+                    <p>Find dog-friendly places and plan amazing adventures together.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>Join Community</h4>
+                    <p>Connect with fellow dog enthusiasts and make new friends.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <a href="{{ login_url }}" class="cta-button">Start Exploring</a>
+                <a href="#" class="cta-button">Complete Your Profile</a>
+            </div>
+
+            <div class="security-tips">
+                <h3 style="margin-top: 0; color: #0369a1;">🔒 Keep Your Account Secure</h3>
+                <p>Here are some tips to keep your DoggoDaily account safe:</p>
+                <ul>
+                    <li><strong>Enable Two-Factor Authentication:</strong> Add an extra layer of security to your account</li>
+                    <li><strong>Use a Strong Password:</strong> Choose a unique password that you don't use elsewhere</li>
+                    <li><strong>Keep Your Email Secure:</strong> Ensure your email account is protected</li>
+                    <li><strong>Review Account Activity:</strong> Regularly check your login history and active sessions</li>
+                </ul>
+                <p><a href="#" style="color: #0369a1; text-decoration: none;">→ Go to Security Settings</a></p>
+            </div>
+
+            <h3>📋 Getting Started Checklist</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>✅ Account created and email verified</li>
+                <li>⬜ Complete your profile information</li>
+                <li>⬜ Upload your first dog photo</li>
+                <li>⬜ Write your first story</li>
+                <li>⬜ Enable two-factor authentication</li>
+                <li>⬜ Explore the community gallery</li>
+            </ul>
+
+            <h3>🆘 Need Help?</h3>
+            <p>If you have any questions or need assistance getting started, our support team is here to help:</p>
+            <ul>
+                <li>📧 <a href="#" style="color: #00bfae;">Email Support</a></li>
+                <li>💬 <a href="#" style="color: #00bfae;">Live Chat</a></li>
+                <li>📚 <a href="#" style="color: #00bfae;">Help Center</a></li>
+                <li>❓ <a href="#" style="color: #00bfae;">FAQ</a></li>
+            </ul>
+
+            <p>We're thrilled to have you as part of the DoggoDaily family. Let's make some amazing memories together!</p>
+
+            <p>Happy tail wagging! 🐕‍🦺<br>
+            The DoggoDaily Team</p>
+        </div>
+
+        <div class="footer">
+            <div class="social-links">
+                <a href="#">🐦 Twitter</a>
+                <a href="#">📘 Facebook</a>
+                <a href="#">📷 Instagram</a>
+                <a href="#">💼 LinkedIn</a>
+            </div>
+            <div class="social-links">
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Support</a> |
+                <a href="#">Unsubscribe</a>
+            </div>
+            <p>&copy; 2024 DoggoDaily. All rights reserved.</p>
+            <p>You're receiving this email because you created a DoggoDaily account. We promise to keep your inbox happy!</p>
+        </div>
+    </div>
+</body>
+</html> 
