@@ -1,6 +1,6 @@
-# NavidDoggy DigitalOcean Deployment Guide
+# Doggodaily DigitalOcean Deployment Guide
 
-This guide will help you deploy NavidDoggy to a DigitalOcean Ubuntu droplet.
+This guide will help you deploy Doggodailygy to a DigitalOcean Ubuntu droplet.
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ SSH into your server and run the setup script:
 ssh root@46.101.244.203
 
 # Download the setup script
-wget https://raw.githubusercontent.com/yourusername/naviddog/main/deployment/digitalocean-setup.sh
+wget https://raw.githubusercontent.com/yourusername/Doggodaily/main/deployment/digitalocean-setup.sh
 
 # Make it executable and run
 chmod +x digitalocean-setup.sh
@@ -40,16 +40,16 @@ Upload your project files to the server:
 ```bash
 # Option 1: Using git (recommended)
 cd /var/www
-git clone https://github.com/yourusername/naviddog.git naviddog
+git clone https://github.com/yourusername/Doggodaily.git Doggodaily
 
 # Option 2: Using SCP
-scp -r /path/to/your/project root@46.101.244.203:/var/www/naviddog
+scp -r /path/to/your/project root@46.101.244.203:/var/www/Doggodaily
 ```
 
 ## Step 4: Deploy the Application
 
 ```bash
-cd /var/www/naviddog/deployment
+cd /var/www/Doggodaily/deployment
 chmod +x deploy-digitalocean.sh
 ./deploy-digitalocean.sh
 ```
@@ -59,7 +59,7 @@ chmod +x deploy-digitalocean.sh
 Edit the production environment file:
 
 ```bash
-nano /var/www/naviddog/backend/.env
+nano /var/www/Doggodaily/backend/.env
 ```
 
 Update these critical values:
@@ -90,7 +90,7 @@ If using a domain name instead of IP:
 2. Update nginx configuration:
 
 ```bash
-nano /etc/nginx/sites-available/naviddog
+nano /etc/nginx/sites-available/Doggodaily
 # Change server_name from IP to your domain
 sudo nginx -t
 sudo systemctl reload nginx
@@ -100,8 +100,8 @@ sudo systemctl reload nginx
 
 ### Check Application Status
 ```bash
-sudo systemctl status naviddog
-sudo journalctl -u naviddog -f
+sudo systemctl status Doggodaily
+sudo journalctl -u Doggodaily -f
 ```
 
 ### Check Nginx Status
@@ -112,14 +112,14 @@ sudo tail -f /var/log/nginx/error.log
 
 ### Update Application
 ```bash
-cd /var/www/naviddog
+cd /var/www/Doggodaily
 git pull
-sudo systemctl restart naviddog
+sudo systemctl restart Doggodaily
 ```
 
 ### Backup Database
 ```bash
-cp /var/www/naviddog/backend/data/production.db /backup/location/
+cp /var/www/Doggodaily/backend/data/production.db /backup/location/
 ```
 
 ## Troubleshooting
@@ -127,10 +127,10 @@ cp /var/www/naviddog/backend/data/production.db /backup/location/
 ### Application Won't Start
 ```bash
 # Check logs
-sudo journalctl -u naviddog -n 50
+sudo journalctl -u Doggodaily -n 50
 
 # Check Python environment
-sudo -u naviddog /var/www/naviddog/backend/venv/bin/python -c "import app; print('OK')"
+sudo -u Doggodaily /var/www/Doggodaily/backend/venv/bin/python -c "import app; print('OK')"
 ```
 
 ### Nginx Errors
@@ -145,15 +145,15 @@ sudo tail -f /var/log/nginx/error.log
 ### Permission Issues
 ```bash
 # Fix ownership
-sudo chown -R naviddog:www-data /var/www/naviddog
-sudo chmod -R 755 /var/www/naviddog
+sudo chown -R Doggodaily:www-data /var/www/Doggodaily
+sudo chmod -R 755 /var/www/Doggodaily
 ```
 
 ### Database Issues
 ```bash
 # Recreate database
-cd /var/www/naviddog/backend
-sudo -u naviddog ./venv/bin/python manage.py db upgrade
+cd /var/www/Doggodaily/backend
+sudo -u Doggodaily ./venv/bin/python manage.py db upgrade
 ```
 
 ## Security Best Practices
@@ -182,7 +182,7 @@ sudo -u naviddog ./venv/bin/python manage.py db upgrade
 ## Directory Structure
 
 ```
-/var/www/naviddog/
+/var/www/Doggodaily/
 ├── backend/
 │   ├── app/
 │   ├── venv/
@@ -193,7 +193,7 @@ sudo -u naviddog ./venv/bin/python manage.py db upgrade
 ├── deployment/
 └── uploads/
 
-/var/log/naviddog/
+/var/log/Doggodaily/
 ├── access.log
 └── error.log
 ```
