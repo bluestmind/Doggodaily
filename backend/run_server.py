@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple server runner for NavidDoggy Backend
+Simple server runner for DoggoDaily Backend
 Usage: python run_server.py
 """
 
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    logger.info("🚀 Starting NavidDoggy Backend Server...")
+    logger.info("🚀 Starting DoggoDaily Backend Server...")
     logger.info("🌐 Server will be accessible at: http://46.101.244.203:5000")
     logger.info("🔧 CORS enabled for frontend communication")
     

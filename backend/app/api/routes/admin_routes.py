@@ -3936,3 +3936,5 @@ def admin_update_user_role(user_id):
             'success': False,
             'message': 'Failed to update user role'
         }), 500
+
+    return f"uploads/authors/{filename}" 

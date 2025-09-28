@@ -257,11 +257,11 @@
         "title": "Termini e Condizioni",
         "contentGuidelines": "Linee Guida sui Contenuti",
         "acceptContinue": "Accetta e Continua",
-        "introText": "Inviando la tua storia a NavidDoggy, accetti i seguenti termini:",
+        "introText": "Inviando la tua storia a DoggoDaily, accetti i seguenti termini:",
         "contentOwnership": "Proprietà e Diritti sui Contenuti",
         "contentOwnershipItems": [
           "Possiedi i diritti su tutti i contenuti e media che invii",
-          "Concedi a NavidDoggy il permesso di pubblicare e promuovere i tuoi contenuti",
+          "Concedi a DoggoDaily il permesso di pubblicare e promuovere i tuoi contenuti",
           "Puoi richiedere la rimozione dei tuoi contenuti in qualsiasi momento"
         ],
         "contentStandards": "Standard dei Contenuti",
@@ -429,6 +429,18 @@
       "budget": "Viaggio Economico",
       "luxury": "Viaggio di Lusso",
       "solo": "Viaggio da Solo"
+    },
+    "all": {
+      "title": "Tutte le Storie",
+      "description": "Scopri storie incredibili dalla nostra comunità e fai parte della famiglia DoggODaily"
+    },
+    "error": {
+      "title": "Impossibile Caricare le Storie",
+      "retry": "Riprova"
+    },
+    "empty": {
+      "title": "Nessuna Storia Ancora",
+      "description": "Sii il primo a condividere la tua storia con la nostra comunità!"
     }
   },
   "admin": {

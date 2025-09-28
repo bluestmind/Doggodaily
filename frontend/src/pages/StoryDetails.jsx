@@ -12,6 +12,7 @@ import {
 import storiesService from '../services/storiesService';
 import galleryService from '../services/galleryService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getFileUrl } from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const StoryDetails = () => {
@@ -1320,9 +1321,7 @@ const StoryDetails = () => {
                 onClick={() => {
                   const videoFile = story.media_files.find(media => media.file_type === 'video');
                   if (videoFile) {
-                    const videoUrl = videoFile.file_path.startsWith('http') 
-                      ? videoFile.file_path 
-                      : `http://46.101.244.203:5000/${videoFile.file_path}`;
+                    const videoUrl = getFileUrl(videoFile.file_path);
                     
                     setSelectedVideo({
                       src: videoUrl,
@@ -1478,7 +1477,7 @@ const StoryDetails = () => {
                         <div key={idx} className="media-item">
                       {media.file_type === 'image' ? (
                         <img 
-                          src={media.file_path.startsWith('http') ? media.file_path : `http://46.101.244.203:5000/${media.file_path}`}
+                          src={getFileUrl(media.file_path)}
                           alt={`Story media ${idx + 1}`}
                           style={{
                             width: '100%',
@@ -1495,7 +1494,7 @@ const StoryDetails = () => {
                           width: '100%',
                               height: '200px',
                               background: media.thumbnail_path ? 
-                                `url(${media.thumbnail_path.startsWith('http') ? media.thumbnail_path : `http://46.101.244.203:5000/${media.thumbnail_path}`})` : 
+                                `url(${getFileUrl(media.thumbnail_path)})` : 
                                 'linear-gradient(135deg, #0f766e 0%, #0d9488 100%)',
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
@@ -1506,9 +1505,7 @@ const StoryDetails = () => {
                           position: 'relative'
                         }}
                         onClick={() => {
-                          const videoUrl = media.file_path.startsWith('http') 
-                            ? media.file_path 
-                            : `http://46.101.244.203:5000/${media.file_path}`;
+                          const videoUrl = getFileUrl(media.file_path);
                           
                           setSelectedVideo({
                             src: videoUrl,
@@ -2030,9 +2027,7 @@ const StoryDetails = () => {
             </button>
 
             <img
-              src={story.media_files[currentImageIndex]?.file_path.startsWith('http') 
-                ? story.media_files[currentImageIndex].file_path 
-                : `http://46.101.244.203:5000/${story.media_files[currentImageIndex].file_path}`}
+              src={getFileUrl(story.media_files[currentImageIndex]?.file_path)}
               alt={`Story media ${currentImageIndex + 1}`}
               style={{
                 maxWidth: '100%',

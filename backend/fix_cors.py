@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick CORS fix script for NavidDoggy Backend
+Quick CORS fix script for DoggoDaily Backend
 This script will start the server with explicit CORS configuration
 """
 
@@ -23,14 +23,21 @@ def configure_cors_explicitly():
     
     # Explicit CORS origins - include all possible variations
     cors_origins = [
+        # Development origins
         'http://localhost:3000',
         'http://127.0.0.1:3000',
+        
+        # Production server IP origins
         'http://46.101.244.203:3000', 
         'http://46.101.244.203:5000',
         'https://46.101.244.203:3000',
         'https://46.101.244.203:5000',
         'https://46.101.244.203',
-        'http://46.101.244.203'
+        'http://46.101.244.203',
+        
+        # Production domain origins (HTTPS only)
+        'https://www.doggodaiily.com',
+        'https://doggodaiily.com'
     ]
     
     print("🌐 Configuring CORS with origins:")
@@ -354,7 +361,23 @@ def create_all_tables():
 
 def main():
     """Main function with CORS debugging"""
-    print("🚀 Starting NavidDoggy Backend with CORS Fix...")
+    print("🚀 Starting DoggoDaily Backend with CORS Fix...")
+    
+    # Set production environment variables if not already set
+    if not os.environ.get('FLASK_ENV'):
+        os.environ['FLASK_ENV'] = 'production'
+        print("🔧 Set FLASK_ENV=production")
+    
+    if not os.environ.get('SECRET_KEY'):
+        os.environ['SECRET_KEY'] = 'your-super-secret-key-change-in-production'
+        print("⚠️  Using default SECRET_KEY - change in production!")
+    
+    # Configure Flask app for HTTPS URLs in production
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.config['PREFERRED_URL_SCHEME'] = 'https'
+        app.config['SERVER_NAME'] = 'doggodaiily.com'
+        app.config['BASE_URL'] = 'https://doggodaiily.com'
+        print("🔒 Configured Flask to generate HTTPS URLs with domain doggodaiily.com")
     
     # Create all database tables first
     print("\n" + "="*50)
@@ -460,10 +483,12 @@ def main():
     print("   Accessible from:")
     print("   - http://46.101.244.203:5000 (external)")
     print("   - http://127.0.0.1:5000 (local)")
+    print("   - https://www.doggodaiily.com/api (production domain)")
     print("\n🧪 Test endpoints:")
     print("   - CORS test: http://46.101.244.203:5000/api/cors-test")
     print("   - Book routes: http://46.101.244.203:5000/api/admin/test")
     print("   - Admin login: http://46.101.244.203:5000/api/auth/admin/login")
+    print("   - Health check: https://www.doggodaiily.com/health")
     print("\n📚 Book Management:")
     print("   - Create book: POST /admin/books")
     print("   - List books: GET /admin/books")
@@ -476,13 +501,28 @@ def main():
     print("   ⚠️  Please change these passwords after first login!")
     
     try:
-        # Start server on all interfaces
-        app.run(
-            host='0.0.0.0',  # Critical: Listen on all interfaces
-            port=5000,
-            debug=True,  # Enable debug for CORS issues
-            threaded=True
-        )
+        # Check if running in production mode
+        production_mode = os.environ.get('FLASK_ENV') == 'production'
+        
+        if production_mode:
+            print("🔒 Running in PRODUCTION mode")
+            # Start server in production mode (no debug)
+            app.run(
+                host='0.0.0.0',  # Critical: Listen on all interfaces
+                port=5000,
+                debug=False,  # Disable debug for production
+                threaded=True,
+                ssl_context=None  # SSL handled by Nginx reverse proxy
+            )
+        else:
+            print("🔧 Running in DEVELOPMENT mode")
+            # Start server in development mode (with debug)
+            app.run(
+                host='0.0.0.0',  # Critical: Listen on all interfaces
+                port=5000,
+                debug=True,  # Enable debug for development
+                threaded=True
+            )
     except Exception as e:
         print(f"❌ Server failed to start: {e}")
         sys.exit(1)

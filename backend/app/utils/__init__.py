@@ -1,3 +1,3 @@
 """
-Utils package for NavidDoggy backend
+Utils package for DoggoDaily backend
 """

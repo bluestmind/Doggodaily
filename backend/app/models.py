@@ -8,6 +8,20 @@ import json
 from .extensions import db
 from enum import Enum
 
+def generate_upload_url(filename):
+    """Generate HTTPS URL for uploaded files using the production domain"""
+    from flask import current_app
+    
+    # Check if we're in production mode
+    if current_app.config.get('PREFERRED_URL_SCHEME') == 'https':
+        # Use production domain for HTTPS URLs
+        base_url = 'https://doggodaiily.com'
+    else:
+        # Use development URL
+        base_url = current_app.config.get('BASE_URL', 'http://localhost:5000')
+    
+    return f"{base_url}/uploads/{filename}"
+
 class PermissionLevel(Enum):
     """Admin permission levels"""
     SUPER_ADMIN = "super_admin"
@@ -276,16 +290,16 @@ class Story(db.Model):
                 elif 'uploads/' in self.thumbnail:
                     # Extract relative path for url_for
                     thumb_rel = self.thumbnail.split('uploads/', 1)[1] if 'uploads/' in self.thumbnail else self.thumbnail
-                    thumbnail_url = url_for('main.serve_uploads', filename=thumb_rel, _external=True)
+                    thumbnail_url = generate_upload_url(thumb_rel)
                 else:
                     # Assume it's a relative path
-                    thumbnail_url = url_for('main.serve_uploads', filename=self.thumbnail, _external=True)
+                    thumbnail_url = generate_upload_url(self.thumbnail)
             except Exception as e:
                 print(f"❌ Story thumbnail URL generation failed: {e}")
                 # Fallback: construct URL manually
                 if self.thumbnail and not self.thumbnail.startswith('http'):
                     from flask import current_app
-                    base_url = current_app.config.get('BASE_URL', 'http://46.101.244.203:5000')
+                    base_url = current_app.config.get('BASE_URL', 'https://doggodaiily.com')
                     if 'uploads/' in self.thumbnail:
                         thumbnail_url = f"{base_url}/{self.thumbnail}"
                     else:
@@ -431,14 +445,14 @@ class GalleryItem(db.Model):
         print(f"  📁 rel: {rel}")
         
         try:
-            file_url = url_for('main.serve_uploads', filename=rel, _external=True) if rel else None
+            file_url = generate_upload_url(rel) if rel else None
             print(f"  🔗 Generated URL: {file_url}")
         except Exception as e:
             print(f"  ❌ URL generation failed: {e}")
             # Fallback: construct URL manually
             if rel:
                 from flask import current_app
-                base_url = current_app.config.get('BASE_URL', 'http://46.101.244.203:5000')
+                base_url = current_app.config.get('BASE_URL', 'https://doggodaiily.com')
                 file_url = f"{base_url}/uploads/{rel}"
                 print(f"  🔗 Fallback URL: {file_url}")
             else:
@@ -449,7 +463,7 @@ class GalleryItem(db.Model):
         if self.thumbnail:
             try:
                 thumb_rel = self.thumbnail.split('uploads/', 1)[1] if 'uploads/' in self.thumbnail else self.thumbnail
-                thumbnail_url = url_for('main.serve_uploads', filename=thumb_rel, _external=True)
+                thumbnail_url = generate_upload_url(thumb_rel)
             except Exception as e:
                 print(f"  ❌ Thumbnail URL generation failed: {e}")
                 thumbnail_url = None
@@ -559,11 +573,11 @@ class Tour(db.Model):
                 else:
                     rel_path = self.image
                 
-                image_url = url_for('main.serve_uploads', filename=rel_path, _external=True)
+                image_url = generate_upload_url(rel_path)
             except:
                 # Fallback to direct URL construction
                 from flask import current_app
-                base_url = current_app.config.get('BASE_URL', 'http://46.101.244.203:5000')
+                base_url = current_app.config.get('BASE_URL', 'https://doggodaiily.com')
                 if self.image.startswith('uploads/'):
                     image_url = f"{base_url}/{self.image}"
                 else:

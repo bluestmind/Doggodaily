@@ -70,7 +70,7 @@ def generate_story_video_thumbnail(video_path, output_dir):
         current_app.logger.error(f"Video thumbnail generation failed: {e}")
         return None
 
-@profile_bp.route('/', methods=['GET'])
+@profile_bp.route('/profile', methods=['GET'])
 @login_required
 def get_profile():
     """Get comprehensive user profile data"""
@@ -98,7 +98,7 @@ def get_profile():
             'message': 'Failed to get profile'
         }), 500
 
-@profile_bp.route('/', methods=['PUT'])
+@profile_bp.route('/profile', methods=['PUT'])
 @login_required
 def update_profile():
     """Update user profile information"""
@@ -783,7 +783,6 @@ def end_session(session_id):
             'success': False,
             'message': 'Failed to end session'
         }), 500
-
 # Test route to verify profile routes are working
 @profile_bp.route('/test', methods=['GET'])
 def test_route():

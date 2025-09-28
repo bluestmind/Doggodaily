@@ -16,7 +16,7 @@ const LanguageSync = () => {
       if (isAuthenticated() && user) {
         try {
           // Get user's preferred language from backend
-          const response = await fetch('/api/user/preferences/language', {
+          const response = await fetch('/api/preferences', {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json'
@@ -25,9 +25,9 @@ const LanguageSync = () => {
 
           if (response.ok) {
             const data = await response.json();
-            if (data.success && data.language && data.language !== currentLanguage) {
+            if (data.success && data.data && data.data.display && data.data.display.language && data.data.display.language !== currentLanguage) {
               // Update language if different from current
-              await changeLanguage(data.language);
+              await changeLanguage(data.data.display.language);
             }
           }
         } catch (error) {

@@ -45,6 +45,16 @@ const GalleryPage = () => {
     }
   ];
 
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = `${t('gallery.title')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - Dog & Italy Adventures';
+    };
+  }, [t]);
+
   // Load gallery items on component mount and when filters change
   useEffect(() => {
     loadGalleryItems();

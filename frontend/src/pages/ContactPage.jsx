@@ -33,6 +33,16 @@ const ContactPage = () => {
     }
   }, [user]);
 
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = `${t('contact.getInTouch')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - Dog & Italy Adventures';
+    };
+  }, [t]);
+
   // Offices data removed as location selection is no longer needed
 
   const contactMethods = [
@@ -623,4 +633,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage; 
+export default ContactPage;

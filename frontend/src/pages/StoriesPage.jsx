@@ -1,8 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { FaHeart, FaPaw, FaStar, FaQuoteLeft, FaMapMarkerAlt, FaClock, FaUser, FaPlay, FaArrowRight, FaBookOpen, FaGlobe, FaAward, FaBone, FaUpload, FaTimes, FaThumbsUp, FaReply, FaComment, FaShare, FaEye } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import storiesService from '../services/storiesService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getFileUrl, apiCall } from '../config/api';
 
 const StoriesPage = () => {
   const navigate = useNavigate();
@@ -21,15 +21,21 @@ const StoriesPage = () => {
   const handleLike = async (storyId) => {
     try {
       if (likedStories.has(storyId)) {
-        await storiesService.unlikeStory(storyId);
-        const next = new Set(likedStories);
-        next.delete(storyId);
-        setLikedStories(next);
+        const response = await apiCall(`/api/stories/${storyId}/unlike`, 'DELETE');
+        
+        if (response.success) {
+          const next = new Set(likedStories);
+          next.delete(storyId);
+          setLikedStories(next);
+        }
       } else {
-        await storiesService.likeStory(storyId);
-        const next = new Set(likedStories);
-        next.add(storyId);
-        setLikedStories(next);
+        const response = await apiCall(`/api/stories/${storyId}/like`, 'POST');
+        
+        if (response.success) {
+          const next = new Set(likedStories);
+          next.add(storyId);
+          setLikedStories(next);
+        }
       }
     } catch (e) {
       // ignore
@@ -47,21 +53,7 @@ const StoriesPage = () => {
     date: s.created_at ? new Date(s.created_at).toLocaleDateString() : '',
     readTime: s.reading_time ? `${s.reading_time} min read` : '',
     category: s.category,
-    image: (() => {
-      // Handle thumbnail URL construction for user-submitted stories
-      if (s.thumbnail_url) {
-        return s.thumbnail_url;
-      }
-      if (s.thumbnail) {
-        // If thumbnail is a relative path, construct full URL
-        if (s.thumbnail.startsWith('uploads/')) {
-          return `http://46.101.244.203:5000/${s.thumbnail}`;
-        }
-        return s.thumbnail;
-      }
-      // Fallback to default image
-      return 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&h=800&fit=crop';
-    })(),
+    image: getFileUrl(s.thumbnail_url || s.thumbnail) || 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&h=800&fit=crop',
     preview: s.preview || '',
     content: s.content || '',
     tags: Array.isArray(s.tags) ? s.tags : [],
@@ -104,16 +96,20 @@ const StoriesPage = () => {
   const addComment = async (storyId, parentId = null) => {
     if (!newComment.trim()) return;
     try {
-      const res = await storiesService.addComment(storyId, { content: newComment, parent_id: parentId });
-      if (res.success) {
+      const response = await apiCall(`/api/stories/${storyId}/comments`, 'POST', {
+        content: newComment,
+        parent_id: parentId
+      });
+      
+      if (response.success) {
         setComments(prev => ({
           ...prev,
           [storyId]: [...(prev[storyId] || []), {
-            id: res.data.id,
-            author: res.data.author?.name || 'You',
+            id: response.data.id,
+            author: response.data.author?.name || 'You',
             avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-            content: res.data.content,
-            timestamp: new Date(res.data.created_at || Date.now()).toLocaleString(),
+            content: response.data.content,
+            timestamp: new Date(response.data.created_at || Date.now()).toLocaleString(),
             likes: 0
           }]
         }));
@@ -126,9 +122,13 @@ const StoriesPage = () => {
 
   const loadComments = async (storyId) => {
     try {
-      const res = await storiesService.getComments(storyId, { page: 1, per_page: 20 });
-      if (res.success) {
-        const mapped = (res.data || []).map(c => ({
+      const response = await apiCall(`/api/stories/${storyId}/comments`, 'GET', {
+        page: 1,
+        per_page: 20
+      });
+      
+      if (response.success) {
+        const mapped = (response.data || []).map(c => ({
           id: c.id,
           author: c.author?.name || 'User',
           avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
@@ -158,17 +158,27 @@ const StoriesPage = () => {
         // Get user's current language
         const userLanguage = currentLanguage || 'en';
         
-        console.log('ðŸ” StoriesPage - Loading stories with language:', userLanguage);
-        const res = await storiesService.getStories({ page: 1, per_page: 20, lang: userLanguage });
-        console.log('ðŸ” StoriesPage - API Response:', res);
+        console.log('🔍 StoriesPage - Loading stories for all languages (UI language:', userLanguage, ')');
+        // Use the same pattern as GalleryPage.jsx - apiCall utility
+        // Note: Not filtering by language to show all published stories
+        const params = {
+          page: 1,
+          per_page: 20
+          // Removed lang parameter to show stories in all languages
+        };
+        
+        console.log('🔍 StoriesPage - API params:', params);
+        
+        const res = await apiCall('/api/stories', 'GET', params);
+        console.log('🔍 StoriesPage - API Response:', res);
         
         if (res.success) {
           const all = Array.isArray(res.data) ? res.data : [];
-          console.log('ðŸ” StoriesPage - Raw stories from API:', all.map(s => ({ id: s.id, title: s.title, is_featured: s.is_featured, submitted_at: s.submitted_at, user_id: s.user_id })));
+          console.log('🔍 StoriesPage - Raw stories from API (all languages):', all.map(s => ({ id: s.id, title: s.title, language: s.language, is_featured: s.is_featured, submitted_at: s.submitted_at, user_id: s.user_id })));
           
           // Use the normalizeStory function defined above
           const normalized = all.map(normalizeStory);
-          console.log('ðŸ” StoriesPage - Normalized stories:', normalized.map(s => ({ id: s.id, title: s.title, featured: s.featured, isUserSubmitted: s.isUserSubmitted })));
+          console.log('🔍 StoriesPage - Normalized stories (all languages):', normalized.map(s => ({ id: s.id, title: s.title, featured: s.featured, isUserSubmitted: s.isUserSubmitted })));
           
           setStories(normalized);
         } else {
@@ -185,6 +195,16 @@ const StoriesPage = () => {
     };
     loadStories();
   }, [currentLanguage]); // Reload stories when language changes
+
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = `${t('stories.hero.title')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - VIP Dog & Italy Adventures';
+    };
+  }, [t]);
 
 
 
@@ -820,9 +840,7 @@ const StoriesPage = () => {
                       }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        const videoUrl = story.video.file_path.startsWith('http') 
-                          ? story.video.file_path 
-                          : `http://46.101.244.203:5000/${story.video.file_path}`;
+                        const videoUrl = getFileUrl(story.video.file_path);
                         
                         // Set selected video and show modal
                         setSelectedVideo({

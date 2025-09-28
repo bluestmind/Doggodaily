@@ -104,6 +104,16 @@ const SignupPage = () => {
   });
   const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
 
+  // Set dynamic page title
+  React.useEffect(() => {
+    document.title = `${t('auth.joinDoggoDaily')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - Dog & Italy Adventures';
+    };
+  }, [t]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({

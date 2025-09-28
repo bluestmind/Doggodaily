@@ -185,6 +185,16 @@ const ToursPage = () => {
     }
   }, []);
 
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = `${t('tours.title')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - Dog & Italy Adventures';
+    };
+  }, [t]);
+
   const loadTours = async () => {
     try {
       setLoading(true);

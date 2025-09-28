@@ -224,8 +224,8 @@ const ToursManagement = ({ adminService }) => {
         
         // Common fields
         guide_name: editingItem?.guide_name || '',
-        date: editingItem?.date ? new Date(editingItem.date).toISOString().slice(0, 16) : '',
-        duration: editingItem?.duration || 2,
+        date: editingItem?.date ? new Date(editingItem.date).toISOString().slice(0, 10) : '',
+        start_time: editingItem?.date ? new Date(editingItem.date).toISOString().slice(11, 16) : '',
         requirements: editingItem?.requirements || '',
         status: editingItem?.status || 'active',
         image: null
@@ -276,8 +276,8 @@ const ToursManagement = ({ adminService }) => {
           
           // Common fields
           guide_name: editingItem.guide_name || '',
-          date: editingItem.date ? new Date(editingItem.date).toISOString().slice(0, 16) : '',
-          duration: editingItem.duration || 2,
+          date: editingItem.date ? new Date(editingItem.date).toISOString().slice(0, 10) : '',
+          start_time: editingItem.date ? new Date(editingItem.date).toISOString().slice(11, 16) : '',
           requirements: editingItem.requirements || '',
           status: editingItem.status || 'active',
           image: null
@@ -300,8 +300,8 @@ const ToursManagement = ({ adminService }) => {
         newErrors.date = 'Date is required';
       }
 
-      if (formData.duration < 1) {
-        newErrors.duration = 'Duration must be at least 1 hour';
+      if (!formData.start_time) {
+        newErrors.start_time = 'Start time is required';
       }
       
       setErrors(newErrors);
@@ -311,11 +311,16 @@ const ToursManagement = ({ adminService }) => {
     const handleSubmit = (e) => {
       e.preventDefault();
       if (validateForm()) {
+        // Combine date and start_time into a full datetime
+        const dateTimeString = `${formData.date}T${formData.start_time}:00`;
         const submitData = {
           ...formData,
-          date: new Date(formData.date).toISOString(),
-          duration: parseInt(formData.duration)
+          date: new Date(dateTimeString).toISOString(),
+          duration: 2 // Default duration in hours for backend compatibility
         };
+        
+        // Remove start_time from submit data since it's now part of date
+        delete submitData.start_time;
         
         // Debug logging
         console.log('🔍 ToursManagement form submission:');
@@ -327,6 +332,8 @@ const ToursManagement = ({ adminService }) => {
         console.log('  Italian location:', submitData.location_it);
         console.log('  Short description:', submitData.short_description);
         console.log('  Short description (Italian):', submitData.short_description_it);
+        console.log('  Combined datetime:', submitData.date);
+        console.log('  Default duration:', submitData.duration, 'hours');
         console.log('  All submitData keys:', Object.keys(submitData));
         
         handleSaveTour(submitData);
@@ -612,7 +619,7 @@ const ToursManagement = ({ adminService }) => {
                     fontWeight: 500,
                     color: '#718096'
                   }}>
-                    Duration
+                    Start Time
                   </label>
                   <div style={{
                     padding: '0.75rem',
@@ -621,7 +628,11 @@ const ToursManagement = ({ adminService }) => {
                     borderRadius: '8px',
                     color: '#2d3748'
                   }}>
-                    {editingItem?.duration || 'N/A'} hours
+                    {editingItem?.date ? new Date(editingItem.date).toLocaleTimeString('en-US', { 
+                      hour: '2-digit', 
+                      minute: '2-digit',
+                      hour12: true 
+                    }) : 'N/A'}
                   </div>
                 </div>
               </div>
@@ -1001,26 +1012,25 @@ const ToursManagement = ({ adminService }) => {
                       fontWeight: 500,
                       color: '#718096'
                     }}>
-                      Duration (hours) *
+                      Start Time *
                     </label>
                     <input
-                      type="number"
-                      min="1"
-                      value={formData.duration}
-                      onChange={(e) => handleInputChange('duration', e.target.value)}
+                      type="time"
+                      value={formData.start_time}
+                      onChange={(e) => handleInputChange('start_time', e.target.value)}
                       style={{
                         width: '100%',
                         padding: '0.75rem',
-                        border: `1px solid ${errors.duration ? '#ef4444' : '#e2e8f0'}`,
+                        border: `1px solid ${errors.start_time ? '#ef4444' : '#e2e8f0'}`,
                         borderRadius: '8px',
                         background: 'white',
                         color: '#2d3748',
                         fontSize: '1rem'
                       }}
                     />
-                    {errors.duration && (
+                    {errors.start_time && (
                       <div style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.25rem' }}>
-                        {errors.duration}
+                        {errors.start_time}
                       </div>
                     )}
                   </div>

@@ -1,0 +1,49 @@
+[Unit]
+Description=DoggoDaily Backend Application
+Documentation=https://github.com/your-repo/doggodaily
+After=network.target
+
+[Service]
+# User and group to run the service
+User=www-data
+Group=www-data
+
+# Working directory
+WorkingDirectory=/var/www/doggodaily/backend
+
+# Environment
+Environment=PATH=/var/www/doggodaily/backend/venv/bin
+Environment=FLASK_ENV=production
+Environment=FLASK_CONFIG=production
+EnvironmentFile=/var/www/doggodaily/backend/.env
+
+# Command to start the application
+ExecStart=/var/www/doggodaily/backend/venv/bin/gunicorn \
+    --config /var/www/doggodaily/backend/gunicorn.conf.py \
+    --pid /var/run/doggodaily/gunicorn.pid \
+    wsgi:application
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/www/doggodaily/backend/uploads
+ReadWritePaths=/var/log/doggodaily
+ReadWritePaths=/var/run/doggodaily
+
+# Process management
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=doggodaily
+
+[Install]
+WantedBy=multi-user.target

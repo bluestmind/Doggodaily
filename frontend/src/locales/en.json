@@ -258,11 +258,11 @@
         "title": "Terms and Conditions",
         "contentGuidelines": "Content Guidelines",
         "acceptContinue": "Accept & Continue",
-        "introText": "By submitting your story to NavidDoggy, you agree to the following terms:",
+        "introText": "By submitting your story to DoggoDaily, you agree to the following terms:",
         "contentOwnership": "Content Ownership and Rights",
         "contentOwnershipItems": [
           "You own the rights to all content and media you submit",
-          "You grant NavidDoggy permission to publish and promote your content",
+          "You grant DoggoDaily permission to publish and promote your content",
           "You may request removal of your content at any time"
         ],
         "contentStandards": "Content Standards",
@@ -430,6 +430,18 @@
       "budget": "Budget Travel",
       "luxury": "Luxury Travel",
       "solo": "Solo Travel"
+    },
+    "all": {
+      "title": "All Stories",
+      "description": "Discover amazing stories from our community and be part of the DoggODaily family"
+    },
+    "error": {
+      "title": "Failed to Load Stories",
+      "retry": "Try Again"
+    },
+    "empty": {
+      "title": "No Stories Yet",
+      "description": "Be the first to share your story with our community!"
     }
   },
   "admin": {

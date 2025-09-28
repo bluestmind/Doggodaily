@@ -5,6 +5,7 @@ class Config:
     # Basic Flask config
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production-NOW')
     DEBUG = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    PREFERRED_URL_SCHEME = os.environ.get('PREFERRED_URL_SCHEME', 'http')
     
     # Database config
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///doggo_daily.db')
@@ -28,7 +29,7 @@ class Config:
     JWT_REFRESH_JSON_KEY = 'refresh_token'
     
     # CORS config - more restrictive by default
-    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'http://localhost:3000,http://46.101.244.203:3000,http://46.101.244.203:5000,https://www.doggodaiily.com,https://doggodaiily.com').split(',')
+    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'https://www.doggodaiily.com,https://doggodaiily.com').split(',')
     CORS_SUPPORTS_CREDENTIALS = True
     CORS_MAX_AGE = 86400  # 24 hours
     
@@ -159,6 +160,9 @@ class ProductionConfig(Config):
     FORCE_HTTPS = True
     SESSION_COOKIE_SECURE = True
     LOG_LEVEL = 'WARNING'
+    PREFERRED_URL_SCHEME = 'https'
+    SERVER_NAME = 'doggodaiily.com'
+    BASE_URL = 'https://doggodaiily.com'
     
     # Production-specific security
     BCRYPT_LOG_ROUNDS = 14  # More secure but slower

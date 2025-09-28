@@ -133,7 +133,7 @@ def run_local():
 def log_startup():
     """Log application startup (runs before first request)"""
     if not hasattr(app, '_startup_logged'):
-        app.logger.info("SERVER_STARTUP: NavidDoggy Backend Server Starting...")
+        app.logger.info("SERVER_STARTUP: DoggoDaily Backend Server Starting...")
         app.logger.info(f"ENVIRONMENT: {app.config.get('ENV', 'development')}")
         app.logger.info(f"DEBUG_MODE: {app.config.get('DEBUG', False)}")
         app.logger.info(f"DATABASE_URI: {app.config.get('SQLALCHEMY_DATABASE_URI', 'Unknown')}")

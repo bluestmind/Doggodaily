@@ -31,9 +31,8 @@ export const LanguageProvider = ({ children }) => {
         // First try to get from backend if user is logged in
         const token = localStorage.getItem('authToken');
         if (token) {
-          const response = await fetch('/api/user/preferences/language', {
+          const response = await fetch('/api/preferences', {
             headers: {
-              'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
             },
             credentials: 'include'
@@ -41,8 +40,8 @@ export const LanguageProvider = ({ children }) => {
           
           if (response.ok) {
             const data = await response.json();
-            if (data.success && data.language) {
-              changeLanguage(data.language);
+            if (data.success && data.data && data.data.display && data.data.display.language) {
+              changeLanguage(data.data.display.language);
               return;
             }
           }
@@ -102,14 +101,17 @@ export const LanguageProvider = ({ children }) => {
     try {
       const token = localStorage.getItem('authToken');
       if (token) {
-        await fetch('/api/user/preferences/language', {
-          method: 'POST',
+        await fetch('/api/preferences', {
+          method: 'PUT',
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
           credentials: 'include',
-          body: JSON.stringify({ language: languageCode })
+          body: JSON.stringify({ 
+            display: { 
+              language: languageCode 
+            } 
+          })
         });
       }
     } catch (error) {

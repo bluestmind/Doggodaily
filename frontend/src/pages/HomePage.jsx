@@ -549,6 +549,11 @@ const HomePage = ({ mission, vision }) => {
   const dogClickRef = useReactRef();
   let tooltipTimeout = useRef();
 
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = 'DoggoDaily - Dog & Italy Adventures';
+  }, []);
+
   // Load featured media from API
   const loadFeaturedMedia = async () => {
     try {

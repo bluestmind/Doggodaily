@@ -46,6 +46,16 @@ const LoginPage = () => {
     };
   }, []);
 
+  // Set dynamic page title
+  useEffect(() => {
+    document.title = `${t('auth.welcomeBack')} - DoggoDaily`;
+    
+    // Cleanup: restore default title when component unmounts
+    return () => {
+      document.title = 'DoggoDaily - Dog & Italy Adventures';
+    };
+  }, [t]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({

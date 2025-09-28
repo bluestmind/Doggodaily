@@ -27,7 +27,7 @@ story_bp = Blueprint('story', __name__)
 logger = logging.getLogger(__name__)
 
 # Get all stories
-@story_bp.route('/', methods=['GET'])
+@story_bp.route('/stories', methods=['GET'])
 def get_stories():
     """Get all published stories"""
     try:
@@ -207,8 +207,7 @@ def get_story(story_id):
         }), 500
 
 # Create story (authenticated users)
-@story_bp.route('', methods=['POST'])
-@story_bp.route('/', methods=['POST'])
+@story_bp.route('/stories', methods=['POST'])
 @login_required
 def create_story():
     """Create a new story with media file support"""

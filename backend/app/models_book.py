@@ -60,7 +60,7 @@ class Book(db.Model):
         if self.image:
             # Force fallback URL construction for now
             from flask import current_app
-            base_url = current_app.config.get('BASE_URL', 'http://46.101.244.203:5000')
+            base_url = current_app.config.get('BASE_URL', 'https://doggodaiily.com')
             image_url = f"{base_url}/uploads/{self.image}"
             print(f"🔗 Direct URL for {self.image}: {image_url}")
         
@@ -220,7 +220,7 @@ class Author(db.Model):
         if self.image:
             # Force fallback URL construction for now
             from flask import current_app
-            base_url = current_app.config.get('BASE_URL', 'http://46.101.244.203:5000')
+            base_url = current_app.config.get('BASE_URL', 'https://doggodaiily.com')
             image_url = f"{base_url}/uploads/{self.image}"
             print(f"🔗 Direct URL for {self.image}: {image_url}")
         

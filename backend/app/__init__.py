@@ -13,6 +13,8 @@ from .api import api_bp
 from .auth import auth_bp
 from .main import main_bp
 from .api.routes.admin_routes import admin_bp
+from .api.routes.profile_routes import profile_bp
+from .api.routes.story_routes import story_bp
 from config import config as config_map
 
 # Import all model files to ensure they're registered with SQLAlchemy
@@ -233,7 +235,7 @@ def create_app(config_name=None):
         """Enhanced health check endpoint"""
         try:
             # Check database connection
-            db.session.execute('SELECT 1')
+            db.session.execute(db.text('SELECT 1'))
             db_status = 'healthy'
         except Exception as e:
             db_status = 'unhealthy'
@@ -262,6 +264,8 @@ def create_app(config_name=None):
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
+    app.register_blueprint(profile_bp, url_prefix='/api')
+    app.register_blueprint(story_bp, url_prefix='/api')
 
     # Register Google OAuth client once at startup (per Google Web Server OAuth flow)
     try:

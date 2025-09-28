@@ -209,23 +209,6 @@ class StoriesService {
     }
   }
 
-  async likeStory(id) {
-    try {
-      const response = await apiMethods.post(API_ENDPOINTS.STORIES.LIKE(id));
-      return response;
-    } catch (error) {
-      return { success: false, message: error.message || 'Failed to like story' };
-    }
-  }
-
-  async unlikeStory(id) {
-    try {
-      const response = await apiMethods.delete(API_ENDPOINTS.STORIES.UNLIKE(id));
-      return response;
-    } catch (error) {
-      return { success: false, message: error.message || 'Failed to unlike story' };
-    }
-  }
 
   // Upload story image/media
   async uploadStoryMedia(storyId, file, onProgress = null) {
@@ -235,7 +218,7 @@ class StoriesService {
       formData.append('story_id', storyId);
 
       const response = await apiMethods.upload(
-        `/stories/${storyId}/media`, 
+        `${API_ENDPOINTS.STORIES.GET(storyId)}/media`, 
         formData, 
         onProgress
       );
@@ -261,7 +244,7 @@ class StoriesService {
         ...filters
       };
       
-      const response = await apiMethods.get('/stories/search', params);
+      const response = await apiMethods.get(API_ENDPOINTS.STORIES.LIST, params);
       return {
         success: true,
         data: response.data || [],
@@ -277,9 +260,13 @@ class StoriesService {
   }
 
   // Get featured stories
-  async getFeaturedStories(limit = 10) {
+  async getFeaturedStories(limit = 10, lang = 'en') {
     try {
-      const response = await apiMethods.get('/stories/featured', { limit });
+      const response = await apiMethods.get(API_ENDPOINTS.STORIES.LIST, { 
+        featured: true,
+        limit,
+        lang 
+      });
       return {
         success: true,
         data: response.data || [],
@@ -294,11 +281,13 @@ class StoriesService {
   }
 
   // Get popular stories
-  async getPopularStories(limit = 10, timeframe = 'week') {
+  async getPopularStories(limit = 10, timeframe = 'week', lang = 'en') {
     try {
-      const response = await apiMethods.get('/stories/popular', { 
+      const response = await apiMethods.get(API_ENDPOINTS.STORIES.LIST, { 
+        popular: true,
         limit, 
-        timeframe 
+        timeframe,
+        lang
       });
       return {
         success: true,
@@ -316,7 +305,7 @@ class StoriesService {
   // Get story analytics
   async getStoryAnalytics(id) {
     try {
-      const response = await apiMethods.get(`/stories/${id}/analytics`);
+      const response = await apiMethods.get(`${API_ENDPOINTS.STORIES.GET(id)}/analytics`);
       return {
         success: true,
         data: response.data,

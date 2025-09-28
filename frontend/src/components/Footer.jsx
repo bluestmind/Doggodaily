@@ -313,13 +313,58 @@ const Footer = () => {
             gap: '2rem',
             flexWrap: 'wrap'
           }}>
-            <p style={{
-              color: 'var(--gray-600)',
-              fontSize: '0.9rem',
-              margin: 0
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.25rem'
             }}>
-              {t('footer.copyright')}
-            </p>
+              <p style={{
+                color: 'var(--gray-600)',
+                fontSize: '0.9rem',
+                margin: 0
+              }}>
+                {t('footer.copyright')}
+              </p>
+              
+              {/* Developer Credit */}
+              <p style={{
+                color: 'var(--gray-500)',
+                fontSize: '0.8rem',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                <span>Developed with</span>
+                <FaHeart style={{ 
+                  color: 'var(--primary-teal)', 
+                  fontSize: '0.7rem',
+                  animation: 'pulse 2s infinite'
+                }} />
+                <span>by</span>
+                <a
+                  href="https://github.com/bluestmind" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: 'var(--primary-teal)',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    transition: 'var(--transition-base)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = 'var(--primary-blue)';
+                    e.target.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = 'var(--primary-teal)';
+                    e.target.style.textDecoration = 'none';
+                  }}
+                >
+                  najji
+                </a>
+              </p>
+            </div>
 
             {/* Language Switcher */}
             <LanguageSwitcher variant="footer" />

@@ -7,7 +7,7 @@ class ProfileService {
   // Get user profile
   async getProfile() {
     try {
-      const response = await apiCall('/api/profile/', 'GET');
+      const response = await apiCall('/api/profile/profile', 'GET');
       return response;
     } catch (error) {
       console.error('Failed to get profile:', error);
@@ -21,7 +21,7 @@ class ProfileService {
   // Update profile information
   async updateProfile(profileData) {
     try {
-      const response = await apiCall('/api/profile/', 'PUT', profileData);
+      const response = await apiCall('/api/profile/profile', 'PUT', profileData);
       return response;
     } catch (error) {
       console.error('Failed to update profile:', error);
@@ -104,7 +104,7 @@ class ProfileService {
   // Get user preferences
   async getPreferences() {
     try {
-      const response = await apiCall('/api/profile/preferences', 'GET');
+      const response = await apiCall('/api/preferences', 'GET');
       return response;
     } catch (error) {
       console.error('Failed to get preferences:', error);
@@ -118,7 +118,7 @@ class ProfileService {
   // Update user preferences
   async updatePreferences(preferences) {
     try {
-      const response = await apiCall('/api/profile/preferences', 'PUT', preferences);
+      const response = await apiCall('/api/preferences', 'PUT', preferences);
       return response;
     } catch (error) {
       console.error('Failed to update preferences:', error);

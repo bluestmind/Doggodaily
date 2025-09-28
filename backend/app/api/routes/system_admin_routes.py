@@ -25,9 +25,9 @@ def get_system_settings():
         # Convert to organized structure
         settings = {
             'site': {
-                'siteName': 'NavidDoggy',
+                'siteName': 'DoggoDaily',
                 'siteDescription': 'Your Daily Dose of Dog Adventures',
-                'contactEmail': 'contact@naviddoggy.com',
+                'contactEmail': 'contact@doggodaiily.com',
                 'maintenanceMode': False
             },
             'media': {

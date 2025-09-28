@@ -12,6 +12,11 @@ class ProductionConfig(Config):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'your-production-secret-key-change-this'
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'your-jwt-secret-key-change-this'
     
+    # Force HTTPS URLs for production
+    PREFERRED_URL_SCHEME = 'https'
+    SERVER_NAME = 'doggodaiily.com'
+    BASE_URL = 'https://doggodaiily.com'
+    
     # Flask-Login Session Protection
     SESSION_COOKIE_SECURE = True  # HTTPS only
     SESSION_COOKIE_HTTPONLY = True
@@ -22,10 +27,8 @@ class ProductionConfig(Config):
     CORS_ORIGINS = [
         'https://www.doggodaiily.com',  # Production domain
         'https://doggodaiily.com',      # Production domain without www
-        'http://46.101.244.203:3000',  # Frontend on port 3000 (fallback)
-        'http://46.101.244.203:5000',  # Backend API (fallback)
-        'https://46.101.244.203',      # IP fallback
-        'http://localhost:3000'        # For local development
+        'https://46.101.244.203',       # IP fallback (HTTPS only)
+        'http://localhost:3000'         # For local development only
     ]
     
     # Frontend URL for production
@@ -43,12 +46,12 @@ class ProductionConfig(Config):
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
     
     # Upload configuration
-    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER') or '/var/www/naviddog/uploads'
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER') or '/root/site/backend/uploads'
     MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50MB max file size
     
     # Logging
     LOG_LEVEL = 'INFO'
-    LOG_FILE = '/var/log/naviddog/app.log'
+    LOG_FILE = '/var/log/doggodaily/app.log'
     
     # Rate limiting
     RATELIMIT_STORAGE_URL = os.environ.get('REDIS_URL') or 'memory://'

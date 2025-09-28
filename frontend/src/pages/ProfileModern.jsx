@@ -143,7 +143,7 @@ const PasswordRequirements = ({ password, t }) => {
 const safeApiCall = async (url, options = {}) => {
   try {
     // Ensure we use the full backend URL
-    const baseURL = import.meta.env.VITE_API_URL || 'http://46.101.244.203:5000';
+    const baseURL = import.meta.env.VITE_API_URL || 'https://doggodaiily.com/api';
     const fullUrl = url.startsWith('http') ? url : `${baseURL}${url}`;
     
     console.log('🔍 Safe API call to:', fullUrl);
@@ -289,7 +289,7 @@ const ProfileModern = () => {
         // Try to load additional profile data from API (optional)
         try {
           // This is optional - if it fails, we still show the profile with auth data
-          const data = await safeApiCall('/api/profile/');
+          const data = await safeApiCall('/api/profile/profile');
           
           if (data.success && data.user) {
             setUser(data.user);
@@ -327,7 +327,7 @@ const ProfileModern = () => {
       
       // Try to save to API, but don't fail if it doesn't work
       try {
-        const data = await safeApiCall('/api/profile/', {
+        const data = await safeApiCall('/api/profile/profile', {
           method: 'PUT',
           body: JSON.stringify(profileData),
         });
@@ -3472,7 +3472,7 @@ const TermsModal = ({ onClose, onAccept }) => {
             )) : (
               <>
                 <li>You own the rights to all content and media you submit</li>
-                <li>You grant NavidDoggy permission to publish and promote your content</li>
+                <li>You grant DoggoDaily permission to publish and promote your content</li>
                 <li>You may request removal of your content at any time</li>
               </>
             )}

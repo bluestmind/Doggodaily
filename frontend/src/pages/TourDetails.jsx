@@ -10,7 +10,6 @@ import {
 import toursService from '../services/toursService';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { translateDynamicContent } from '../utils/translationUtils.js';
 
 const TourDetails = () => {
   const { id } = useParams();

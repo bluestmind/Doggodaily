@@ -269,7 +269,7 @@ const StoriesManagement = ({ adminService }) => {
       });
       
       // Use the same approach as ProfileModern.jsx - direct API call
-      const baseURL = import.meta.env.VITE_API_URL || 'http://46.101.244.203:5000';
+      const baseURL = import.meta.env.VITE_API_URL || 'https://doggodaiily.com/api';
       const endpoint = editingItem && editingItem.id 
         ? `/api/stories/${editingItem.id}` 
         : '/api/stories'; // Now use /api/stories for creation (handles media files)

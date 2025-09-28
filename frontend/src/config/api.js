@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // API Configuration
 const API_CONFIG = {
-  // Use production domain for API calls
-  baseURL: import.meta.env.VITE_API_URL || 'https://www.doggodaiily.com/api',
+  // Force HTTPS URLs for production
+  baseURL: 'https://doggodaiily.com/api',
   timeout: 10000,
   withCredentials: true,
   headers: {
@@ -13,9 +13,34 @@ const API_CONFIG = {
   },
 };
 
+// File upload base URL configuration
+export const FILE_BASE_URL = 'https://doggodaiily.com';
+
+// Helper function to construct file URLs
+export const getFileUrl = (filePath) => {
+  if (!filePath) return null;
+  
+  // If it's already a full URL, return as is
+  if (filePath.startsWith('http')) {
+    return filePath;
+  }
+  
+  // If it's a relative path starting with uploads/, construct full URL
+  if (filePath.startsWith('uploads/')) {
+    return `${FILE_BASE_URL}/${filePath}`;
+  }
+  
+  // If it's just a filename, assume it's in uploads/
+  return `${FILE_BASE_URL}/uploads/${filePath}`;
+};
+
 // Create axios instance
 const api = axios.create(API_CONFIG);
+
 export const API_BASE_URL = api.defaults.baseURL;
+
+// Debug: Log the actual API base URL being used
+console.log('🔍 API Base URL:', API_BASE_URL);
 
 // Request interceptor: cookie-based session, no Authorization header
 api.interceptors.request.use(
@@ -100,22 +125,22 @@ api.interceptors.response.use(
 export const API_ENDPOINTS = {
   // Authentication
   AUTH: {
-    LOGIN: '/api/auth/login',
-    ADMIN_LOGIN: '/api/auth/admin/login',
-    REGISTER: '/api/auth/register',
-    LOGOUT: '/api/auth/logout',
-    // REFRESH removed in session mode
-    FORGOT_PASSWORD: '/api/auth/forgot-password',
-    RESET_PASSWORD: '/api/auth/reset-password',
-    VERIFY_EMAIL: '/api/auth/verify-email',
-    PROFILE: '/api/auth/profile',
-    SETUP_2FA: '/api/auth/setup-2fa',
-    VERIFY_2FA: '/api/auth/verify-2fa',
-    DISABLE_2FA: '/api/auth/disable-2fa',
-    SESSIONS: '/api/auth/sessions',
-    LOGOUT_ALL: '/api/auth/logout-all',
-    GOOGLE_LOGIN: '/api/auth/google/login',
-    GOOGLE_CALLBACK: '/api/auth/google/callback',
+        LOGIN: '/api/auth/login',
+        ADMIN_LOGIN: '/api/auth/admin/login',
+        REGISTER: '/api/auth/register',
+        LOGOUT: '/api/auth/logout',
+        // REFRESH removed in session mode
+        FORGOT_PASSWORD: '/api/auth/forgot-password',
+        RESET_PASSWORD: '/api/auth/reset-password',
+        VERIFY_EMAIL: '/api/auth/verify-email',
+        PROFILE: '/api/auth/profile',
+        SETUP_2FA: '/api/auth/setup-2fa',
+        VERIFY_2FA: '/api/auth/verify-2fa',
+        DISABLE_2FA: '/api/auth/disable-2fa',
+        SESSIONS: '/api/auth/sessions',
+        LOGOUT_ALL: '/api/auth/logout-all',
+        GOOGLE_LOGIN: '/api/auth/google/login',
+        GOOGLE_CALLBACK: '/api/auth/google/callback',
   },
   
   // Users
